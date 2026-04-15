@@ -30,15 +30,25 @@ async def startup():
 # ------------------------ MIDDLEWARE ------------------------
 app.add_middleware(GZipMiddleware)
 
+# ========================= CORS (OLD CONFIG - НЕ ТРОГАТЬ) =========================
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=[
+#         "https://test.smartvision.life",
+#         "http://localhost:8000",
+#         "http://localhost:5173",
+#         "http://127.0.0.1:8000",
+#         "http://127.0.0.1:5173",
+#     ],
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+# ========================= CORS (NEW CONFIG - TEMP) =========================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://test.smartvision.life",
-        "http://localhost:8000",
-        "http://localhost:5173",
-        "http://127.0.0.1:8000",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=["*"],  # временно разрешаем всё
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -111,7 +121,7 @@ except Exception as e:
     log.warning("Could not mount data dir as static: %s", e)
 
 # ------------------------ FRONTEND STATIC ------------------------
-STATIC_ROOT = (Path(__file__).resolve().parents[1] / "smart").resolve()
+STATIC_ROOT = (Path(__file__).resolve().parents[1] / "focus").resolve()
 
 if STATIC_ROOT.exists():
     app.mount("/", StaticFiles(directory=str(STATIC_ROOT), html=True), name="frontend")
