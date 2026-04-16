@@ -58,15 +58,25 @@
     }
   });
 
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
+  function submitMessage() {
     const text = chatInput.value.trim();
     if (!text) return;
 
     createMessage('Грег', text, 'user');
     chatInput.value = '';
     chatInput.focus();
+  }
+
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitMessage();
+  });
+
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      submitMessage();
+    }
   });
 
   scrollToBottom();
