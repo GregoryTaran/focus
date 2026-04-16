@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Чат — Не вреди себе. Алкоголь</title>
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/focus/focus.css">
+
+  <script type="module" src="/js/smartid.init.js"></script>
+</head>
+<body data-layout="practicum" class="sprint-page-mode">
+
+  <div id="left-overlay"></div>
+  <aside id="left-panel"></aside>
+
+  <div id="practicum-dropdown-overlay"></div>
+  <div id="practicum-dropdown"></div>
+
+  <div id="right-overlay"></div>
+  <aside id="right-panel"></aside>
+
+  <div id="page">
+    <header id="topbar"></header>
+
+    <main id="main" class="sprint-main">
+      <section class="sprint-screen">
+
+<div class="sprint-progress">
+  <div class="sprint-progress-fill" style="width: 26%;"></div>
+</div>
+
+<div class="sprint-chat-wrap">
+  <div class="sprint-chat-scroll" id="chatMessages">
+
+    <div class="sprint-message sprint-message-ai">
+      <div class="sprint-bubble sprint-bubble-ai">
+        <div class="sprint-author">AI</div>
+
+        <div class="sprint-message-text">
+          Смысл дня: <strong>Будь честен с собой</strong><br><br>
+          Давай честно. В каких моментах ты сегодня был не до конца честен с собой?
+        </div>
+
+        <div class="sprint-quick-actions">
+          <button type="button" class="sprint-quick-btn" data-action="focus-input">Написать</button>
+          <button type="button" class="sprint-quick-btn" data-action="insert-template">Не знаю</button>
+          <button type="button" class="sprint-quick-btn" data-action="give-example">Дай пример</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-user">
+      <div class="sprint-bubble sprint-bubble-user">
+        <div class="sprint-author">Грег</div>
+        Пока не до конца понимаю, в чем именно я был не честен.
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-ai">
+      <div class="sprint-bubble sprint-bubble-ai">
+        <div class="sprint-author">AI</div>
+        Иногда нечестность — это не ложь вслух, а когда ты делаешь вид, что тебе нормально, хотя тебе тяжело.
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-user">
+      <div class="sprint-bubble sprint-bubble-user">
+        <div class="sprint-author">Грег</div>
+        Да, это похоже. Я часто говорю себе, что всё под контролем.
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-ai">
+      <div class="sprint-bubble sprint-bubble-ai">
+        <div class="sprint-author">Хаби</div>
+        Хорошо. Тогда первый честный шаг — назвать реальное состояние. Что на самом деле происходит внутри?
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-user">
+      <div class="sprint-bubble sprint-bubble-user">
+        <div class="sprint-author">Грег</div>
+        Усталость. Напряжение. И желание просто сбежать от этого.
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-ai">
+      <div class="sprint-bubble sprint-bubble-ai">
+        <div class="sprint-author">AI</div>
+        Уже хорошо. Это честнее, чем делать вид, что “всё ок”. А где сегодня это напряжение может толкнуть тебя во вред?
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-user">
+      <div class="sprint-bubble sprint-bubble-user">
+        <div class="sprint-author">Грег</div>
+        Может толкнуть в алкоголь или в тупое зависание.
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-ai">
+      <div class="sprint-bubble sprint-bubble-ai">
+        <div class="sprint-author">Хаби</div>
+        Тогда задача не “стать идеальным”, а не навредить себе в ближайший момент. Что будет самым бережным шагом прямо сейчас?
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-user">
+      <div class="sprint-bubble sprint-bubble-user">
+        <div class="sprint-author">Грег</div>
+        Сесть ровно, подышать и не убегать от состояния.
+      </div>
+    </div>
+
+    <div class="sprint-message sprint-message-ai">
+      <div class="sprint-bubble sprint-bubble-ai">
+        <div class="sprint-author">AI</div>
+        Отлично. Это и есть начало удержания. Зафиксируй: “Я не обязан сейчас всё решить. Я обязан себе не вредить”.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<form class="sprint-inputbar" id="chatForm">
+  <textarea
+    id="chatInput"
+    class="sprint-input"
+    placeholder="Написать шаг..."
+    rows="1"
+  ></textarea>
+
+  <div class="sprint-input-actions">
+    <button type="submit" class="sprint-icon-btn sprint-send-btn" aria-label="Отправить">
+      ↗
+    </button>
+    <button type="button" class="sprint-icon-btn sprint-mic-btn" aria-label="Микрофон">
+      🎤
+    </button>
+  </div>
+</form>
+
+      </section>
+    </main>
+
+    <footer id="footer"></footer>
+  </div>
+
+<script type="module" src="/js/layout.js"></script>
+<script src="/focus/alco/sprint.js"></script>
+</body>
+</html>

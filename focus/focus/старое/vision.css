@@ -1,0 +1,258 @@
+/********************************************************
+  SMART VISION — VISION PAGE UI (ЧИСТЫЙ, НОВЫЙ)
+********************************************************/
+
+
+/*******************************************************
+  I. NAVIGATION — Кнопка «Назад»
+*******************************************************/
+.vision-back {
+    margin: 10px 0 20px 0;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-back:hover {
+    color: #111;
+}
+
+
+
+/*******************************************************
+  II. VISION CARD — Универсальная карточка
+*******************************************************/
+.vision-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin: 20px 0;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+
+/*******************************************************
+  III. TITLE CARD — Заголовок визии
+*******************************************************/
+.vision-title-card h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.vision-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: #666;
+}
+
+.vision-actions {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+/*******************************************************
+  IV. VISION LIST — список визий
+*******************************************************/
+.vision-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.vision-list-item {
+    background: #fafafa;
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1px solid #e2e2e2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    cursor: pointer;
+    transition: background .15s ease;
+}
+
+.vision-list-item:hover {
+    background: #f0f0f0;
+}
+
+.vision-list-item-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.vision-list-item-meta {
+    font-size: 14px;
+    color: #666;
+}
+
+
+
+/*******************************************************
+  V. STEPS — шаги визии
+*******************************************************/
+.vision-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.vision-step {
+    background: #fafafa;
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1px solid #e2e2e2;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.vision-step-text {
+    font-size: 16px;
+    line-height: 1.45;
+    flex: 1;
+}
+
+.vision-step-actions {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+/*******************************************************
+  VI. INPUT PANEL — Добавление шага
+*******************************************************/
+.vision-input-panel {
+    background: #ffffff;
+    padding: 14px;
+    border-radius: 14px;
+    margin: 20px 0;
+
+    display: flex;
+    gap: 10px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+#stepInput {
+    flex: 1;
+    resize: none;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+}
+
+
+/* ОБЩАЯ КАРТОЧКА СТРАНИЦЫ ВИЗИЙ */
+.vision-page-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vision-page-title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* Кнопка создания визии */
+.vision-create-btn {
+    width: 100%;
+    padding: 12px 18px;
+    background: #2b72ff;
+    border-radius: 12px;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.vision-create-btn:hover {
+    background: #0063ff;
+}
+
+/* Список визий и карточки */
+.vision-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.vision-list-item {
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: 0.2s ease;
+}
+
+.vision-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.vision-list-item-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.vision-list-item-meta {
+    font-size: 14px;
+    color: #777;
+}
+
+
+
+/*******************************************************
+  VII. ADAPTIVE (Media Queries)
+*******************************************************/
+@media (max-width: 800px) {
+
+    .vision-card {
+        padding: 16px;
+    }
+
+    .vision-step {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .vision-title-card h1 {
+        font-size: 22px;
+    }
+}
+

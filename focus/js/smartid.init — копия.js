@@ -1,5 +1,14 @@
+/* ============================================================
+   SMARTID INIT — УЛУЧШЕННАЯ СХЕМА:
+   1) МГНОВЕННЫЙ TOPBAR ПО LOCALSTORAGE
+   2) ПОТОМ СИНХРОНИЗАЦИЯ С СЕРВЕРОМ
+   ============================================================ */
+
 (() => {
 
+  // ------------------------------------------------------------
+  // 1) Создаём глобальную session (как и раньше)
+  // ------------------------------------------------------------
   if (!window.SMART_SESSION) {
     const session = {
       authenticated: false,
@@ -18,10 +27,10 @@
 
   const session = window.SMART_SESSION;
 
-  // =========================
-  // LOCAL STORAGE
-  // =========================
 
+  // ------------------------------------------------------------
+  // 2) Восстанавливаем мгновенно LocalStorage → session
+  // ------------------------------------------------------------
   const ls_auth  = localStorage.getItem("sv_authenticated");
   const ls_uid   = localStorage.getItem("sv_user_id");
   const ls_email = localStorage.getItem("sv_email");
@@ -37,10 +46,23 @@
     session.loading = false;
   }
 
-  // =========================
-  // SERVER SYNC
-  // =========================
 
+  // ------------------------------------------------------------
+  // 3) МГНОВЕННЫЙ рендер TOPBAR + MENU по LocalStorage
+  // ------------------------------------------------------------
+  import('/js/topbar.module.js')
+    .then(mod => {
+      mod.renderTopbar(session);      // быстрый рендер до сервера
+      mod.renderMenu(session.level);
+      mod.initMenuControls();
+    })
+    .catch(err => console.error("Fast Topbar error:", err));
+
+
+
+  // ------------------------------------------------------------
+  // 4) Загружаем сессию с сервера (НЕ блокирует UI)
+  // ------------------------------------------------------------
   async function loadSessionFromServer() {
     try {
       const res = await fetch('/api/auth/me', { credentials: 'include' });
@@ -55,12 +77,13 @@
           session.email   = data.user?.email ?? null;
           session.name    = data.user?.name ?? null;
 
+          // обновляем LС
           localStorage.setItem("sv_authenticated", "yes");
           localStorage.setItem("sv_user_id", session.user_id);
           localStorage.setItem("sv_email", session.email || "");
           localStorage.setItem("sv_name", session.name || "");
           localStorage.setItem("sv_level", session.level.toString());
-
+        
         } else {
           clearLocal();
         }
@@ -82,6 +105,11 @@
     document.dispatchEvent(new Event("SMART_SESSION_READY"));
   }
 
+
+
+  // ------------------------------------------------------------
+  // 5) Очистка localStorage (logout helper)
+  // ------------------------------------------------------------
   function clearLocal() {
     session.authenticated = false;
     session.user_id = null;
@@ -96,29 +124,42 @@
     localStorage.removeItem("sv_level");
   }
 
-  // =========================
-  // INIT (БЕЗ TOPBAR)
-  // =========================
 
-  loadSessionFromServer().then(initFooter);
+  // ------------------------------------------------------------
+  // 6) После сервера → корректирующий рендер
+  // ------------------------------------------------------------
+  loadSessionFromServer().then(initLayout);
 
-  function initFooter() {
+  async function initLayout() {
+    await session.ready;
+
+    import('/js/topbar.module.js')
+      .then(mod => {
+        mod.renderTopbar(session);      // финальный рендер по серверу
+        mod.renderMenu(session.level);
+        mod.initMenuControls();
+      })
+      .catch(err => console.error("Topbar final error:", err));
+
     import('/js/footer.js')
       .then(mod => mod.renderFooter())
       .catch(err => console.error("Footer error:", err));
   }
 
-  // =========================
-  // LOGOUT
-  // =========================
 
+  // ------------------------------------------------------------
+  // 7) Глобальный logout: безопасный и мгновенный
+  // ------------------------------------------------------------
   window.SV_LOGOUT = async function () {
+    // 1) мгновенно чистим localStorage + session
     clearLocal();
 
+    // 2) отправляем logout на сервер (фоново)
     try {
       fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     } catch (e) {}
 
+    // 3) редирект
     location.href = '/index.html';
   };
 

@@ -4,17 +4,17 @@
 
 // --------------------------- MENU DATA ---------------------
 export const MENU = [
-  { id: 'home',   title: 'Главная', href: 'index.html', allow: [1, 2] },
-  { id: 'about',  title: 'О проекте', href: 'about/about.html', allow: [1, 2] },
-  { id: 'priv',   title: 'Политика', href: 'privacy/privacy.html', allow: [1, 2] },
-  { id: 'terms',  title: 'Условия', href: 'terms/terms.html', allow: [1, 2] },
+  { id: 'home',   title: 'Главная', href: '/index.html', allow: [1, 2] },
+  { id: 'about',  title: 'О проекте', href: '/about/about.html', allow: [1, 2] },
+  { id: 'priv',   title: 'Политика', href: '/privacy/privacy.html', allow: [1, 2] },
+  { id: 'terms',  title: 'Условия', href: '/terms/terms.html', allow: [1, 2] },
 
-  { id: 'login',  title: 'Вход/регистрация', href: 'login/login.html#login', allow: [1] },
+  { id: 'login',  title: 'Вход/регистрация', href: '/login/login.html#login', allow: [1] },
 
-  { id: 'rec',    title: 'Диктофон', href: 'voicerecorder/voicerecorder.html', allow: [2] },
-  { id: 'vision', title: 'Путь по визии', href: 'vision/index.html', allow: [2] },
+  { id: 'rec',    title: 'Диктофон', href: '/voicerecorder/voicerecorder.html', allow: [2] },
+  { id: 'vision', title: 'Путь по визии', href: '/vision/vision_list.html', allow: [2] },
 
-  { id: 'app',    title: 'Мобильное приложение', href: 'app/app.html', allow: [1, 2] },
+  { id: 'app',    title: 'Мобильное приложение', href: '/app/app.html', allow: [1, 2] },
 
   { id: 'logout', title: 'Выйти', href: '#logout', action: 'logout', allow: [2] }
 ];
@@ -26,8 +26,8 @@ export function renderTopbar(session) {
   const topbar = document.getElementById('topbar');
   if (!topbar) return;
 
-  const logoHref = 'index.html';
-  const logoSrc  = 'assets/logo400.jpg';
+const logoHref = '/index.html';
+const logoSrc  = '/assets/logo400.jpg';
 
   topbar.innerHTML = `
     <div class="topbar-inner">
@@ -94,35 +94,36 @@ export function renderMenu(level) {
 }
 
 // ===========================================================
-// MENU CONTROLS
+// MENU CONTROLS  (ЧИСТЫЕ, МИНИМАЛЬНЫЕ, БЕЗ ВЫЧИСЛЕНИЙ)
 // ===========================================================
 export function initMenuControls() {
   const body = document.body;
   const sidebar = document.getElementById('sidebar');
   const btn = document.querySelector('.menu-toggle');
-
-  // ★ ADD — твой overlay
   const overlay = document.getElementById('overlay');
 
   if (!sidebar || !btn) return;
 
+  // Открыть меню
   btn.addEventListener('click', () => {
     body.classList.add('menu-open');
   });
 
+  // Клик по пункту меню → закрыть
   sidebar.addEventListener('click', (e) => {
     if (e.target.tagName === 'A') {
       body.classList.remove('menu-open');
     }
   });
 
-  // ★ ADD — обработчик клика по тёмному фону
+  // Клик по overlay → закрыть
   if (overlay) {
     overlay.addEventListener('click', () => {
       body.classList.remove('menu-open');
     });
   }
 
+  // Если резко расширили окно → закрыть меню
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 900) {
       body.classList.remove('menu-open');

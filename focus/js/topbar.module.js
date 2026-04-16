@@ -26,8 +26,42 @@ export function renderTopbar(session) {
   const topbar = document.getElementById('topbar');
   if (!topbar) return;
 
-const logoHref = '/index.html';
-const logoSrc  = '/assets/logo400.jpg';
+  // 👉 читаем режим со страницы
+  const mode = document.body.dataset.topbar || 'public';
+
+  // =========================
+  // ACCOUNT MODE (наш текущий)
+  // =========================
+  if (mode === 'account') {
+
+    topbar.innerHTML = `
+      <div class="topbar-inner account-mode">
+
+        <!-- LEFT (пусто) -->
+        <div></div>
+
+        <!-- CENTER (лого) -->
+        <div class="logo">
+          <img src="/assets/logo400.jpg" alt="FOCUS" />
+        </div>
+
+        <!-- RIGHT (бургер пользователя) -->
+        <button class="right-menu-toggle" id="right-menu-toggle">☰</button>
+
+      </div>
+    `;
+
+    // важно: включаем управление меню
+
+    return;
+  }
+
+  // =========================
+  // DEFAULT (старое поведение)
+  // =========================
+
+  const logoHref = '/index.html';
+  const logoSrc  = '/assets/logo400.jpg';
 
   topbar.innerHTML = `
     <div class="topbar-inner">

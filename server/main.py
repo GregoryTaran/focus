@@ -4,14 +4,18 @@ from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import JSONResponse
 import logging, os
+
 from pathlib import Path
+from dotenv import load_dotenv
+
+# загрузка .env
+env_path = Path(__file__).parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 # ------------------------ DB INIT ------------------------
 from db import init_db
 
-
 # ------------------------ ROUTERS ------------------------
-# ❗️ ТУТ АККУРАТНАЯ ПРАВКА — подключаем НОВЫЙ vision_server.py
 from vision.vision_server import router as vision_router
 from voicerecorder.voicerecorder_server import router as vr_router
 

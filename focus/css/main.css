@@ -500,3 +500,14 @@ body.menu-open #overlay {
   }
 
 }
+
+
+
+/* ACCOUNT TOPBAR */
+.account-mode {
+  grid-template-columns: 40px 1fr 40px !important;
+}
+
+.account-mode .logo img {
+  width: 140px;
+}
