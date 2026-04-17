@@ -699,6 +699,11 @@ body.sprint-page-mode #main.sprint-main {
   background: #e5e5e5;
 }
 
+.account-menu-list a.is-active {
+  background: #f0f0f0;
+  font-weight: 700;
+}
+
 /* =========================
    MOBILE
    ========================= */

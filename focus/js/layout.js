@@ -116,6 +116,9 @@ function highlightActiveLeftMenu() {
   if (currentPath === '/') currentPath = '/index.html';
 
   document.querySelectorAll('.practicum-menu a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href === '#') return;
+
     const hrefPath = new URL(a.href, location.origin).pathname.toLowerCase();
     a.classList.toggle('is-active', hrefPath === currentPath);
   });
@@ -134,6 +137,8 @@ function renderPracticumDropdown(mode, practicum) {
     return;
   }
 
+  const relatedLinks = Array.isArray(practicum.related) ? practicum.related : [];
+
   dropdown.innerHTML = `
     <div class="practicum-dropdown-card">
       <div class="practicum-dropdown-section">
@@ -141,16 +146,22 @@ function renderPracticumDropdown(mode, practicum) {
         <div class="practicum-dropdown-current">✓ ${escapeHtml(practicum.shortTitle)}</div>
       </div>
 
+      ${
+        relatedLinks.length
+          ? `
       <div class="practicum-dropdown-section">
         <div class="practicum-dropdown-label">Другие</div>
         <div class="practicum-dropdown-links">
-          ${practicum.related.map(item => `
+          ${relatedLinks.map(item => `
             <a href="${item.href}" class="practicum-dropdown-link">
               ${escapeHtml(item.label)}
             </a>
           `).join('')}
         </div>
       </div>
+      `
+          : ''
+      }
 
       <div class="practicum-dropdown-section">
         <a href="/focus/focus_index.html" class="practicum-dropdown-link practicum-dropdown-all">
@@ -170,11 +181,14 @@ function renderRightPanel(mode) {
   if (!panel) return;
 
   let menuItems = [];
+  let navClass = 'account-menu';
 
   if (mode === 'open') {
     menuItems = OPEN_MENU;
+    navClass = 'account-menu open-menu';
   } else if (mode === 'account' || mode === 'practicum') {
     menuItems = ACCOUNT_MENU;
+    navClass = 'account-menu account-nav-menu';
   }
 
   if (!menuItems.length) {
@@ -183,12 +197,27 @@ function renderRightPanel(mode) {
   }
 
   panel.innerHTML = `
-    <nav class="account-menu">
+    <nav class="${navClass}">
       <ul class="account-menu-list">
         ${renderMenuItems(menuItems)}
       </ul>
     </nav>
   `;
+
+  highlightRightMenu();
+}
+
+function highlightRightMenu() {
+  let currentPath = location.pathname.toLowerCase();
+  if (currentPath === '/') currentPath = '/index.html';
+
+  document.querySelectorAll('#right-panel .account-menu-list a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href || href === '#') return;
+
+    const hrefPath = new URL(a.href, location.origin).pathname.toLowerCase();
+    a.classList.toggle('is-active', hrefPath === currentPath);
+  });
 }
 
 function renderMenuItems(items) {
