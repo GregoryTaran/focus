@@ -704,6 +704,16 @@ body.sprint-page-mode #main.sprint-main {
   font-weight: 700;
 }
 
+.logo-link {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-link:hover {
+  opacity: 0.8;
+}
+
 /* =========================
    MOBILE
    ========================= */

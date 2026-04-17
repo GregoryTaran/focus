@@ -32,27 +32,41 @@ function renderTopbar(mode, practicum) {
   const topbar = document.getElementById('topbar');
   if (!topbar) return;
 
-  if (mode === 'open' || mode === 'account') {
-    const menuLabel =
-      mode === 'open'
-        ? 'Открыть меню сайта'
-        : 'Открыть меню пользователя';
-
-    topbar.innerHTML = `
-      <div class="topbar-inner account-mode">
-        <div class="topbar-brand">
+if (mode === 'open') {
+  topbar.innerHTML = `
+    <div class="topbar-inner account-mode">
+      <div class="topbar-brand">
+        <a href="/focus/open/index.html" class="logo-link">
           <div class="logo-text">HABI FOCUS SYSTEM™</div>
-        </div>
-
-        <div class="topbar-right">
-          <button class="menu-icon-btn" id="right-menu-toggle" aria-label="${menuLabel}">
-            ☰
-          </button>
-        </div>
+        </a>
       </div>
-    `;
-    return;
-  }
+
+      <div class="topbar-right">
+        <button class="menu-icon-btn" id="right-menu-toggle" aria-label="Открыть меню сайта">
+          ☰
+        </button>
+      </div>
+    </div>
+  `;
+  return;
+}
+
+if (mode === 'account') {
+  topbar.innerHTML = `
+    <div class="topbar-inner account-mode">
+      <div class="topbar-brand">
+        <div class="logo-text">HABI FOCUS SYSTEM™</div>
+      </div>
+
+      <div class="topbar-right">
+        <button class="menu-icon-btn" id="right-menu-toggle" aria-label="Открыть меню пользователя">
+          ☰
+        </button>
+      </div>
+    </div>
+  `;
+  return;
+}
 
   if (mode === 'practicum' && practicum) {
     topbar.innerHTML = `
