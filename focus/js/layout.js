@@ -1,4 +1,4 @@
-import { PRACTICUMS } from '/focus/focus.config.js';
+import { OPEN_MENU, ACCOUNT_MENU, PRACTICUMS } from '/focus/focus.config.js';
 
 function renderLayout() {
   const mode = document.body.dataset.layout || 'public';
@@ -32,7 +32,12 @@ function renderTopbar(mode, practicum) {
   const topbar = document.getElementById('topbar');
   if (!topbar) return;
 
-  if (mode === 'account') {
+  if (mode === 'open' || mode === 'account') {
+    const menuLabel =
+      mode === 'open'
+        ? 'Открыть меню сайта'
+        : 'Открыть меню пользователя';
+
     topbar.innerHTML = `
       <div class="topbar-inner account-mode">
         <div class="topbar-brand">
@@ -40,7 +45,7 @@ function renderTopbar(mode, practicum) {
         </div>
 
         <div class="topbar-right">
-          <button class="menu-icon-btn" id="right-menu-toggle" aria-label="Открыть меню пользователя">
+          <button class="menu-icon-btn" id="right-menu-toggle" aria-label="${menuLabel}">
             ☰
           </button>
         </div>
@@ -97,13 +102,7 @@ function renderLeftPanel(mode, practicum) {
 
       <nav class="practicum-menu">
         <ul class="practicum-menu-list">
-          ${practicum.menu.map(item => `
-            <li>
-              <a href="${item.href}" data-key="${item.key}">
-                ${escapeHtml(item.label)}
-              </a>
-            </li>
-          `).join('')}
+          ${renderMenuItems(practicum.menu)}
         </ul>
       </nav>
     </div>
@@ -170,20 +169,39 @@ function renderRightPanel(mode) {
   const panel = document.getElementById('right-panel');
   if (!panel) return;
 
-  if (mode === 'account' || mode === 'practicum') {
-    panel.innerHTML = `
-      <nav class="account-menu">
-        <ul class="account-menu-list">
-          <li><a href="/focus/focus_index.html">Главная</a></li>
-          <li><a href="/profile/profile.html">Мой профиль</a></li>
-          <li><a href="#" id="logout-link">Выход</a></li>
-        </ul>
-      </nav>
-    `;
+  let menuItems = [];
+
+  if (mode === 'open') {
+    menuItems = OPEN_MENU;
+  } else if (mode === 'account' || mode === 'practicum') {
+    menuItems = ACCOUNT_MENU;
+  }
+
+  if (!menuItems.length) {
+    panel.innerHTML = '';
     return;
   }
 
-  panel.innerHTML = '';
+  panel.innerHTML = `
+    <nav class="account-menu">
+      <ul class="account-menu-list">
+        ${renderMenuItems(menuItems)}
+      </ul>
+    </nav>
+  `;
+}
+
+function renderMenuItems(items) {
+  return items.map(item => {
+    const actionAttr = item.action ? ` data-action="${escapeHtml(item.action)}"` : '';
+    return `
+      <li>
+        <a href="${item.href}"${actionAttr}>
+          ${escapeHtml(item.label)}
+        </a>
+      </li>
+    `;
+  }).join('');
 }
 
 // ======================
@@ -200,7 +218,6 @@ function initControls(mode) {
   const rightOverlay = document.getElementById('right-overlay');
   const dropdownOverlay = document.getElementById('practicum-dropdown-overlay');
   const rightPanel = document.getElementById('right-panel');
-  const logoutLink = document.getElementById('logout-link');
 
   if (leftBtn && mode === 'practicum') {
     leftBtn.addEventListener('click', () => {
@@ -242,36 +259,22 @@ function initControls(mode) {
   }
 
   if (rightPanel) {
-    rightPanel.addEventListener('click', (e) => {
+    rightPanel.addEventListener('click', async (e) => {
       const link = e.target.closest('a');
       if (!link) return;
 
-      if (link.id !== 'logout-link') {
-        body.classList.remove('right-open');
-      }
-    });
-  }
+      const action = link.dataset.action;
 
-  if (logoutLink) {
-    logoutLink.addEventListener('click', async (e) => {
-      e.preventDefault();
-
-      try {
-        if (window.SV_LOGOUT) {
-          await window.SV_LOGOUT();
-          return;
-        }
-
-        await fetch('/api/auth/logout', {
-          method: 'POST',
-          credentials: 'include'
-        });
-      } catch (err) {
-        console.warn('Logout error:', err);
+      if (action === 'logout') {
+        e.preventDefault();
+        await handleLogout();
+        return;
       }
 
-      location.href = '/index.html';
+      body.classList.remove('right-open');
     });
+
+    initRightPanelSwipe(rightPanel, body);
   }
 
   window.addEventListener('resize', () => {
@@ -279,6 +282,65 @@ function initControls(mode) {
       body.classList.remove('left-open', 'right-open', 'practicum-dropdown-open');
     }
   });
+}
+
+async function handleLogout() {
+  try {
+    if (window.SV_LOGOUT) {
+      await window.SV_LOGOUT();
+      return;
+    }
+
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include'
+    });
+  } catch (err) {
+    console.warn('Logout error:', err);
+  }
+
+  location.href = '/index.html';
+}
+
+function initRightPanelSwipe(panel, body) {
+  let startX = 0;
+  let startY = 0;
+  let isTracking = false;
+
+  panel.addEventListener('touchstart', (e) => {
+    if (!body.classList.contains('right-open')) return;
+    if (!e.touches || !e.touches.length) return;
+
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isTracking = true;
+  }, { passive: true });
+
+  panel.addEventListener('touchmove', (e) => {
+    if (!isTracking || !e.touches || !e.touches.length) return;
+
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+
+    const diffX = currentX - startX;
+    const diffY = currentY - startY;
+
+    const isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY);
+    const isSwipeLeft = diffX < -40;
+
+    if (isHorizontalSwipe && isSwipeLeft) {
+      body.classList.remove('right-open');
+      isTracking = false;
+    }
+  }, { passive: true });
+
+  panel.addEventListener('touchend', () => {
+    isTracking = false;
+  }, { passive: true });
+
+  panel.addEventListener('touchcancel', () => {
+    isTracking = false;
+  }, { passive: true });
 }
 
 // ======================

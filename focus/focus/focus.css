@@ -22,6 +22,28 @@
 }
 
 /* =========================
+   GLOBAL PAGE WIDTH — FOCUS
+   ========================= */
+
+body[data-layout="account"] #page,
+body[data-layout="practicum"] #page {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+body[data-layout="account"] #topbar,
+body[data-layout="practicum"] #topbar,
+body[data-layout="account"] #main,
+body[data-layout="practicum"] #main,
+body[data-layout="account"] #footer,
+body[data-layout="practicum"] #footer {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================
    HEADER — ACCOUNT
    ========================= */
 
@@ -179,7 +201,7 @@
   transition: right 0.25s ease;
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 84px 20px 24px;
+  padding: 28px 20px 24px;
 }
 
 body.right-open #right-panel {
@@ -225,12 +247,10 @@ body.right-open #right-overlay {
 }
 
 /* =========================
-   FOCUS HOME
+   FOCUS HOME / PRACTICUM PAGES
    ========================= */
 
 .focus-page {
-  max-width: 760px;
-  margin: 0 auto;
   padding: 24px 0;
 }
 
@@ -483,7 +503,7 @@ body.practicum-dropdown-open #practicum-dropdown-overlay {
 }
 
 /* =========================================================
-   SPRINT — CLEAN VERSION
+   SPRINT
    ========================================================= */
 
 body.sprint-page-mode #footer {
@@ -500,8 +520,6 @@ body.sprint-page-mode #main.sprint-main {
 }
 
 .sprint-screen {
-  max-width: 760px;
-  margin: 0 auto;
   height: calc(100vh - 78px);
   display: flex;
   flex-direction: column;
@@ -609,7 +627,6 @@ body.sprint-page-mode #main.sprint-main {
   background: #f7f7f7;
 }
 
-/* input */
 .sprint-inputbar {
   flex: 0 0 auto;
   display: grid;
@@ -737,7 +754,7 @@ body.sprint-page-mode #main.sprint-main {
   #right-panel {
     width: 280px;
     max-width: 86vw;
-    padding: 76px 16px 20px;
+    padding: 20px 16px 20px;
   }
 
   #left-panel {
@@ -805,4 +822,41 @@ body.sprint-page-mode #main.sprint-main {
     border-radius: 14px;
     font-size: 20px;
   }
+}
+
+
+/* === OPEN PAGES FORM + TEXT === */
+
+.focus-text {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #333;
+}
+
+.focus-list {
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto 20px;
+  padding-left: 20px;
+}
+
+.focus-list li {
+  margin-bottom: 10px;
+}
+
+.focus-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.focus-input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 }

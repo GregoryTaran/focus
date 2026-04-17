@@ -1,3 +1,18 @@
+export const OPEN_MENU = [
+  { key: 'home', label: 'Главная', href: '/focus/open/index.html' },
+  { key: 'about', label: 'О продукте', href: '/focus/open/about.html' },
+  { key: 'terms', label: 'Условия использования', href: '/focus/open/terms.html' },
+  { key: 'privacy', label: 'Политика конфиденциальности', href: '/focus/open/privacy.html' },
+  { key: 'login', label: 'Войти / Зарегистрироваться', href: '/focus/open/login.html' }
+];
+
+export const ACCOUNT_MENU = [
+  { key: 'home', label: 'Главная', href: '/focus/focus_index.html' },
+  { key: 'practicums', label: 'Практикумы', href: '/focus/focus_index.html' },
+  { key: 'profile', label: 'Профиль', href: '/profile/profile.html' },
+  { key: 'logout', label: 'Выход', href: '#', action: 'logout' }
+];
+
 export const PRACTICUMS = {
   alco: {
     slug: 'alco',
@@ -11,9 +26,6 @@ export const PRACTICUMS = {
       { key: 'meetings', label: 'Встречи', href: '/focus/alco/meetings.html' },
       { key: 'how', label: 'Как пользоваться', href: '/focus/alco/how.html' }
     ],
-    related: [
-      { slug: 'english', label: 'Английский', href: '/focus/english/index.html' },
-      { slug: 'self', label: 'Самодисциплина', href: '/focus/self/index.html' }
-    ]
+    related: []
   }
 };
